@@ -162,4 +162,17 @@ open class PlayPublisherExtension @JvmOverloads constructor(
                         ReleaseStatus.values().joinToString { "'${it.publishedName}'" }
             }
         }
+
+    @get:Internal("Backing property for upload OBB")
+    internal var _uploadObb: Boolean? = null
+    /**
+     * Specify if obb file should be uploaded with the release. Defaults to false.
+     */
+    @get:Input
+    var uploadObb: Boolean
+        get() = _uploadObb ?: false
+        set(value) {
+            _uploadObb = value
+        }
+
 }

@@ -65,6 +65,23 @@ open class PublishApk : PlayPublishPackageBase() {
             return handleUploadFailures(e, content.file)
         }
 
+        if (extension.uploadObb) {
+            val file = File(project.rootDir, "main." + variant.versionCode + "." + variant.applicationId + ".obb")
+            if (file.exists()) {
+                expansionfiles()
+                        .upload(
+                                variant.applicationId,
+                                editId,
+                                variant.versionCode,
+                                "main",
+                                FileContent("application/octet-stream", file)
+                        )
+                        .trackUploadProgress(progressLogger, "OBB")
+                        .execute()
+            }
+        }
+
+
         handlePackageDetails(editId, apk.versionCode)
 
         return apk
